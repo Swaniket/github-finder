@@ -7,9 +7,11 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
+import { GithubProvider } from "./context/github/GithubContext";
+
 function App() {
   return (
-    <>
+    <GithubProvider>
       <div className="flex flex-col h-screen justify-between">
         <Navbar />
 
@@ -24,7 +26,7 @@ function App() {
         <Footer />
       </div>
       
-    </>
+    </GithubProvider>
   );
 }
 
