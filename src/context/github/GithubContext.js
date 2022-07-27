@@ -30,6 +30,7 @@ export const GithubProvider = ({ children }) => {
     });
   };
 
+  // Dispatch action to set loading to true
   const setLoading = () => {
     dispatch({
         type: "SET_LOADING"

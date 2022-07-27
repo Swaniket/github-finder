@@ -1,13 +1,13 @@
-import React from 'react'
-import UserResults from '../components/users/UserResults'
+import UserResults from "../components/users/UserResults";
+import UserSearch from "../components/users/UserSearch";
 
 function Home() {
   return (
     <>
-    {/* Search Componet will go here */}
-      <UserResults/>
+      <UserSearch />
+      <UserResults />
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;
