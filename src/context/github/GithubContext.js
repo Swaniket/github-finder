@@ -9,6 +9,7 @@ const GithubContext = createContext();
 export const GithubProvider = ({ children }) => {
   const initialState = {
     users: [],
+    user: {},
     loading: false,
   };
 
@@ -27,7 +28,7 @@ export const GithubProvider = ({ children }) => {
         Authorization: `token ${GITHUB_TOKEN}`,
       },
     });
-    const {items} = await response.json();
+    const { items } = await response.json();
 
     dispatch({
       type: "GET_USERS",
@@ -35,11 +36,34 @@ export const GithubProvider = ({ children }) => {
     });
   };
 
+  // Get a Single Users
+  const getUser = async (login) => {
+    setLoading();
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+
+    if (response.status === 404) {
+      window.location = "/notfound";
+    } else {
+      const data = await response.json();
+
+      dispatch({
+        type: "GET_USER",
+        payload: data,
+      });
+    }
+  };
+
+  // Clear the users array from the state
   const clearSearchResults = () => {
     dispatch({
       type: "CLEAR_USERS",
-    })
-  }
+    });
+  };
 
   // Dispatch action to set loading to true
   const setLoading = () => {
@@ -53,8 +77,10 @@ export const GithubProvider = ({ children }) => {
       value={{
         users: state.users,
         loading: state.loading,
+        user: state.user,
         searchUsers,
-        clearSearchResults
+        clearSearchResults,
+        getUser
       }}
     >
       {children}

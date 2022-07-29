@@ -8,9 +8,9 @@ function Alert() {
     alert !== null && (
       <div
         className={`grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 gap-8 mb-4`}
-        style={{ visibility: alert ? "visible" : "hidden" }}
+        style={{ visibility: alert ? "visible" : "hidden", position: "absolute" }}
       >
-      <div class="toast toast-top toast-end">
+      <div class="toast toast-top toast-end" style={{top: "60px"}}>
         <div className="alert alert-error">
           <div>
             <svg
