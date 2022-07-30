@@ -66,7 +66,7 @@ function RepoItem({ repo }) {
         <div>
           {topics &&
             topics.map((topic) => (
-              <div className="mr-2 badge  badge-lg badge-primary">{topic}</div>
+              <div className="mr-2 badge m-1 badge-lg badge-primary">{topic}</div>
             ))}
         </div>
 

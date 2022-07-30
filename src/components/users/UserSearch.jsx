@@ -23,11 +23,17 @@ function UserSearch() {
         type: "SET_LOADING",
       });
       const users = await searchUsers(text);
-      dispatch({
-        type: "GET_USERS",
-        payload: users,
-      });
-      setText("");
+      if (users.length === 0) {
+        setAlert("User doesn't exists", "error");
+        dispatch({ type: "END_LOADING" });
+        setText("");
+      } else {
+        dispatch({
+          type: "GET_USERS",
+          payload: users,
+        });
+        setText("");
+      }
     }
   };
 
@@ -50,7 +56,9 @@ function UserSearch() {
             <div className="hero screen">
               <div className="hero-content text-center">
                 <div className="max-w-md">
-                  <h1 className="text-5xl font-bold">Welcome to GitHub Finder</h1>
+                  <h1 className="text-5xl font-bold">
+                    Welcome to GitHub Finder
+                  </h1>
                   <p className="py-6">Search by any GitHub username</p>
                 </div>
               </div>
@@ -59,14 +67,14 @@ function UserSearch() {
         </AnimatePresence>
       )}
 
-      <div className="grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8 ml-20 mr-20">
+      <div className="grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8 ml-10 mr-10">
         <div>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
               <div className="relative">
                 <input
                   className="w-full pr-40 bg-gray-200 input input-lg text-black"
-                  placeholder="Enter an username"
+                  placeholder="Username"
                   value={text}
                   onChange={handleOnChange}
                 />
