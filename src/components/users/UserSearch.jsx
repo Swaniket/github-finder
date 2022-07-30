@@ -3,28 +3,38 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import GithubContext from "../../context/github/GithubContext";
 import AlertContext from "../../context/alert/AlertContext";
+import { searchUsers } from "../../context/github/GithubActions";
 
 function UserSearch() {
-  const { users, searchUsers, clearSearchResults } = useContext(GithubContext);
+  const { users, dispatch } = useContext(GithubContext);
   const { setAlert } = useContext(AlertContext);
 
   const [text, setText] = useState("");
 
   const handleOnChange = (e) => setText(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (text === "") {
       setAlert("Please enter a user name", "error");
     } else {
-      searchUsers(text);
+      dispatch({
+        type: "SET_LOADING",
+      });
+      const users = await searchUsers(text);
+      dispatch({
+        type: "GET_USERS",
+        payload: users,
+      });
       setText("");
     }
   };
 
   const clearUsers = () => {
-    clearSearchResults();
+    dispatch({
+      type: "CLEAR_USERS",
+    });
   };
 
   return (
@@ -37,11 +47,11 @@ function UserSearch() {
             exit={{ opacity: 0 }}
             layout
           >
-            <div class="hero screen">
-              <div class="hero-content text-center">
-                <div class="max-w-md">
-                  <h1 class="text-5xl font-bold">Welcome to GitHub Finder</h1>
-                  <p class="py-6">Search by any GitHub username</p>
+            <div className="hero screen">
+              <div className="hero-content text-center">
+                <div className="max-w-md">
+                  <h1 className="text-5xl font-bold">Welcome to GitHub Finder</h1>
+                  <p className="py-6">Search by any GitHub username</p>
                 </div>
               </div>
             </div>
