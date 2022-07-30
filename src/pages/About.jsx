@@ -12,7 +12,7 @@ function About() {
       </p>
       <p className='text-lg text-gray-400'>
         Created By: {" "}
-        <a className='text-white' href='https://twitter.com/hassibmoddasser'>
+        <a className='text-white' href='https://github.com/Swaniket'>
           Swaniket Chowdhury
         </a>
       </p>

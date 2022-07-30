@@ -2,12 +2,15 @@ import { useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
 
-import GithubContext from "../context/github/GithubContext";
 import Spinner from "../components/layout/Spinner";
+import RepoList from "../components/repos/RepoList";
+
+import GithubContext from "../context/github/GithubContext";
 
 function User() {
   const params = useParams();
-  const { user, getUser, loading } = useContext(GithubContext);
+  const { user, getUser, loading, getUserRepos, repos } =
+    useContext(GithubContext);
 
   const {
     name,
@@ -21,7 +24,6 @@ function User() {
     followers,
     following,
     public_repos,
-    public_gists,
     hireable,
     company,
     email,
@@ -31,6 +33,7 @@ function User() {
 
   useEffect(() => {
     getUser(params.login);
+    getUserRepos(params.login);
   }, []);
 
   if (loading) {
@@ -54,11 +57,6 @@ function User() {
                 <img src={avatar_url} alt="" />
               </figure>
               <div className="card-body justify-end">
-              {/* <div class="mockup-code">
-  
-  <pre data-prefix=">" class="text-warning  mb-0"><code>{name}</code></pre> 
-  <pre data-prefix=">" class="text-success flex-grow-0"><code>@{login}</code></pre>
-</div> */}
                 <h2 className="card-title mb-0">{name}</h2>
                 <p className="flex-grow-0">@{login}</p>
               </div>
@@ -125,7 +123,8 @@ function User() {
         {/* Main Stats */}
 
         <div class="stats shadow rounded-lg shadow-md bg-base-100 w-full">
-          <div className="grid grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-2 md:grid-cols-3">
+            {/* Followers Stat */}
             <div class="stat place-items-center">
               <div class="stat-title">Followers</div>
               <div
@@ -140,6 +139,7 @@ function User() {
               </div>
             </div>
 
+            {/* Following Stat */}
             <div class="stat place-items-center">
               <div class="stat-title">Following</div>
               <div
@@ -148,12 +148,13 @@ function User() {
               >
                 <FaUserFriends
                   className="text-2xl"
-                  style={{ marginTop: "5px", marginRight: "7px"}}
+                  style={{ marginTop: "5px", marginRight: "7px" }}
                 />
                 {following}
               </div>
             </div>
 
+            {/* Public Repos Stat */}
             <div class="stat place-items-center">
               <div class="stat-title">Public Repos</div>
               <div
@@ -167,22 +168,10 @@ function User() {
                 {public_repos}
               </div>
             </div>
-            <div class="stat place-items-center">
-              <div class="stat-title">Public Gists</div>
-              <div
-                class="stat-value"
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <FaStore
-                  className="text-2xl"
-                  style={{ marginTop: "5px", marginRight: "7px" }}
-                />
-                {public_gists}
-              </div>
-            </div>
           </div>
         </div>
-        {/* <RepoList repos={repos} /> */}
+
+        <RepoList repos={repos} />
       </div>
     </>
   );
