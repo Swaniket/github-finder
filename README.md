@@ -1,6 +1,7 @@
 # Github Finder
 
 Github Finder is a React app to search GitHub profiles and see profile details.
+[Click to visit the Live Version](https://github-finder-virid-zeta.vercel.app/)
 
 ### Screens
 
